@@ -17,7 +17,6 @@ module Data.ProtoLens.TextFormat(
     readMessageOrDie,
     ) where
 
-import Lens.Family2 ((&),(^.),(.~), set, over)
 import Control.Applicative ((<$>))
 import Control.Arrow (left)
 import qualified Data.ByteString
@@ -25,6 +24,7 @@ import Data.Char (isPrint, isAscii, chr)
 import Data.Foldable (foldlM, foldl')
 import Data.Maybe (catMaybes)
 import qualified Data.Map as Map
+import Data.ProtoLens.Lens ((&),(^.),(.~), set, over)
 import qualified Data.Set as Set
 import qualified Data.Text.Encoding as Text
 import qualified Data.Text.Lazy as Lazy

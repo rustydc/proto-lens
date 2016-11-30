@@ -18,8 +18,8 @@ import Data.ProtoLens.BenchmarkUtil (protoBenchmark, benchmarkMain)
 import GHC.Generics (Generic)
 import Control.DeepSeq (NFData)
 import Criterion.Main (Benchmark)
-import Lens.Family2 ((&), (.~))
 import Data.Int (Int32)
+import Data.ProtoLens.Lens ((&), (.~))
 import Data.ProtoLens.Message (def)
 import Proto.UnusedFields
 

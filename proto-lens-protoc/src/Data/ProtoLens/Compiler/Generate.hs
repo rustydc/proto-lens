@@ -19,6 +19,7 @@ import qualified Data.Foldable as F
 import qualified Data.List as List
 import qualified Data.Map as Map
 import Data.Maybe (isNothing)
+import Data.ProtoLens.Lens ((^.))
 import Data.Ord (comparing)
 import qualified Data.Set as Set
 import Data.String (fromString)
@@ -27,7 +28,6 @@ import qualified Data.Text as T
 import Data.Tuple (swap)
 import Language.Haskell.Exts.Syntax as Syntax
 import Language.Haskell.Exts.SrcLoc (noLoc)
-import Lens.Family2 ((^.))
 import Bootstrap.Proto.Google.Protobuf.Descriptor
     ( EnumValueDescriptorProto
     , FieldDescriptorProto
@@ -87,8 +87,8 @@ generateModule modName imports syntaxType definitions importedEnv
               [ "Prelude", "Data.Int", "Data.Word"]
             ++ map importReexported
                 [ "Data.ProtoLens", "Data.ProtoLens.Message.Enum"
-                , "Lens.Family2", "Lens.Family2.Unchecked", "Data.Default.Class"
-                , "Data.Text",  "Data.Map" , "Data.ByteString"
+                , "Data.Default.Class", "Data.Text",  "Data.Map"
+                , "Data.ByteString"
                 ]
             ++ map importSimple imports)
           (concatMap generateDecls (Map.elems definitions)
@@ -328,16 +328,15 @@ generateEnumDecls info =
 
 generateFieldDecls :: String -> [Decl]
 generateFieldDecls fStr =
-    -- foo :: forall msg msg' . Field.HasField "foo" msg msg'
-    --        => Lens.Lens msg msg' (Field.Field "foo" msg)
-    --                              (Field.Field "foo" msg')
+    -- foo :: forall msg msg' f .
+    --     (Data.ProtoLens.HasField "foo" msg msg', Prelude.Functor f) =>
+    --     (Data.ProtoLens.Field "foo" msg ->
+    --       f (Data.ProtoLens.Field "foo" msg')) -> msg -> f msg'
     -- foo = Field.field (Field.ProxySym :: Field.Proxy "foo")
     [ TypeSig noLoc [f]
-          $ TyForall (Just ["msg", "msg'"])
-                  [ClassA "Data.ProtoLens.HasField" [fSym, "msg", "msg'"]]
-                  $ "Lens.Family2.Lens" @@ "msg" @@ "msg'"
-                    @@ ("Data.ProtoLens.Field" @@ fSym @@ "msg")
-                    @@ ("Data.ProtoLens.Field" @@ fSym @@ "msg'")
+          $ TyForall (Just ["msg", "msg'", "f"])
+                  [ClassA "Data.ProtoLens.HasField" [fSym, "msg", "msg'"], ClassA "Prelude.Functor" ["f"]]
+                  $ TyFun (TyFun ("Data.ProtoLens.Field" @@ fSym @@ "msg") ("f" @@ ("Data.ProtoLens.Field" @@ fSym @@ "msg'"))) (TyFun "msg" ("f" @@ "msg'"))
     , FunBind [match f []
                   $ "Data.ProtoLens.field"
                       @@ ExpTypeSig noLoc "Data.ProtoLens.ProxySym"
@@ -539,13 +538,13 @@ hsFieldValueDefault env fd = case fd ^. type' of
 
 -- | A lens to access an internal field.
 --
---   lens _Foo_bar (\x__ y__ -> x__ { _Foo_bar = y__ })
+--   \ afb s -> Prelude.fmap (\ y__ -> s{_Foo_bar = y__}) (afb (_Foo_bar s))
 rawFieldAccessor :: QName -> Exp
-rawFieldAccessor f = "Lens.Family2.Unchecked.lens" @@ getter @@ setter
+rawFieldAccessor f = Lambda noLoc ["afb", "s"] $
+    "Prelude.fmap" @@ setter @@ ("afb" @@ (getter @@ "s"))
   where
     getter = Var f
-    setter = Lambda noLoc ["x__", "y__"]
-                    $ RecUpdate "x__" [FieldUpdate f "y__"]
+    setter = Lambda noLoc ["y__"] $ RecUpdate "s" [FieldUpdate f "y__"]
 
 descriptorExpr :: SyntaxType -> Env QName -> MessageInfo Name -> Exp
 descriptorExpr syntaxType env m

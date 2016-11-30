@@ -27,11 +27,11 @@ import Data.List (mapAccumL)
 import qualified Data.Map as Map
 import Data.Maybe (fromMaybe)
 import Data.Monoid
+import Data.ProtoLens.Lens ((^.))
 import qualified Data.Set as Set
 import Data.Text (Text, cons, splitOn, toLower, uncons, unpack)
 import qualified Data.Text as T
 import Language.Haskell.Exts.Syntax (Name(..), QName(..), ModuleName(..))
-import Lens.Family2 ((^.))
 import Bootstrap.Proto.Google.Protobuf.Descriptor
     ( DescriptorProto
     , EnumDescriptorProto

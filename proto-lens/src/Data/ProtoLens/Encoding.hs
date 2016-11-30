@@ -34,7 +34,7 @@ import Data.ByteString.Lazy.Builder as Builder
 import qualified Data.ByteString.Lazy as L
 import Data.Monoid (mconcat, mempty)
 import Data.Foldable (foldMap, toList, foldl')
-import Lens.Family2 (set, over, (^.), (&))
+import Data.ProtoLens.Lens (set, over, (^.), (&))
 
 -- TODO: We could be more incremental when parsing/encoding length-based fields,
 -- rather than forcing the whole thing.  E.g., for encoding we're doing extra

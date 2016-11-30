@@ -35,9 +35,9 @@ import Data.Default.Class
 import Data.Int
 import qualified Data.Map as Map
 import Data.Map (Map)
+import Data.ProtoLens.Lens (Lens', over)
 import qualified Data.Text as T
 import Data.Word
-import Lens.Family2 (Lens', over)
 
 -- | Every protocol buffer is an instance of 'Message'.  This class enables
 -- serialization by providing reflection of all of the fields that may be used

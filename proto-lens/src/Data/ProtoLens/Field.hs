@@ -39,8 +39,7 @@ module Data.ProtoLens.Field
 
 import Data.Maybe (fromMaybe)
 import GHC.TypeLits (Symbol)
-import Lens.Family2 (Lens, Lens')
-import Lens.Family2.Unchecked (lens)
+import Data.ProtoLens.Lens (Lens, Lens', lens)
 
 -- | A \"proxy\" value for a type-level string (i.e., a type of kind 'Symbol').
 data ProxySym (s :: Symbol) = ProxySym

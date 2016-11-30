@@ -23,5 +23,4 @@ library
                 , bytestring == 0.10.*
                 , containers == 0.5.*
                 , text == 1.2.*
-                , lens-family == 1.2.*
                 , QuickCheck == 2.8.*

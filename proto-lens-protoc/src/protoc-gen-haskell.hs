@@ -17,9 +17,9 @@ import qualified Data.Set as Set
 import qualified Data.Text as T
 import Data.Text (Text, pack)
 import Data.ProtoLens (decodeMessage, def, encodeMessage)
+import Data.ProtoLens.Lens ((^.), (.~), (&))
 import Language.Haskell.Exts.Pretty (prettyPrint)
 import Language.Haskell.Exts.Syntax (ModuleName(..), Name(..), QName(..))
-import Lens.Family2
 import Bootstrap.Proto.Google.Protobuf.Compiler.Plugin
     ( CodeGeneratorRequest
     , CodeGeneratorResponse

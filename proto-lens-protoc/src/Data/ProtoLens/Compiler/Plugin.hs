@@ -22,14 +22,13 @@ import Data.List (foldl', intercalate)
 import qualified Data.Map.Strict as Map
 import Data.Map.Strict (Map, unions, (!))
 import Data.Monoid ((<>))
+import Data.ProtoLens.Lens ((^.))
 import qualified Data.Text as T
 import Data.Text (Text)
 import Language.Haskell.Exts.Syntax (ModuleName(..), Name(..), QName(..))
-import Lens.Family2
 import Bootstrap.Proto.Google.Protobuf.Descriptor
     (FileDescriptorProto, name, dependency, publicDependency)
 import System.FilePath (dropExtension, splitDirectories)
-
 
 import Data.ProtoLens.Compiler.Definitions
 

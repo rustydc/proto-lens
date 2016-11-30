@@ -36,7 +36,6 @@ library
       , directory == 1.2.*
       , filepath == 1.4.*
       , haskell-src-exts == 1.17.*
-      , lens-family == 1.2.*
       , process >= 1.2 && < 1.5
       , proto-lens == 0.1.0.4
       , text == 1.2.*
@@ -51,8 +50,6 @@ library
       , Data.ProtoLens as Data.ProtoLens.Reexport.Data.ProtoLens
       , Data.ProtoLens.Message.Enum as Data.ProtoLens.Reexport.Data.ProtoLens.Message.Enum
       , Data.Text as Data.ProtoLens.Reexport.Data.Text
-      , Lens.Family2 as Data.ProtoLens.Reexport.Lens.Family2
-      , Lens.Family2.Unchecked as Data.ProtoLens.Reexport.Lens.Family2.Unchecked
 
 executable proto-lens-protoc
   main-is:  protoc-gen-haskell.hs
@@ -64,7 +61,6 @@ executable proto-lens-protoc
       , data-default-class >= 0.0 && < 0.2
       , filepath == 1.4.*
       , haskell-src-exts == 1.17.*
-      , lens-family == 1.2.*
       -- Specify an exact version of `proto-lens`, since it's tied closely
       -- to the generated code.
       , proto-lens == 0.1.0.4

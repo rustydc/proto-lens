@@ -39,7 +39,6 @@ Benchmark int-packing
     build-depends: base
                  , criterion
                  , deepseq
-                 , lens-family
                  , proto-lens
                  , proto-lens-benchmarks
                  , proto-lens-protoc
@@ -54,7 +53,6 @@ Benchmark nested
     build-depends: base
                  , criterion
                  , deepseq
-                 , lens-family
                  , proto-lens
                  , proto-lens-benchmarks
                  , proto-lens-protoc
@@ -69,7 +67,6 @@ Benchmark unused-fields
     build-depends: base
                  , criterion
                  , deepseq
-                 , lens-family
                  , proto-lens
                  , proto-lens-benchmarks
                  , proto-lens-protoc

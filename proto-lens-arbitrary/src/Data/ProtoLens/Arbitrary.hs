@@ -22,8 +22,7 @@ import Data.Map (Map)
 import qualified Data.Map as M
 import Data.Maybe (isJust, fromJust)
 import qualified Data.Text as T
-import Lens.Family2 (Lens', view, set)
-import Lens.Family2.Unchecked (lens)
+import Data.ProtoLens.Lens (Lens', lens, view, set)
 import Test.QuickCheck (Arbitrary(..), Gen, suchThat, frequency, listOf,
                         shrinkList)
 
